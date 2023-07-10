@@ -1,0 +1,26 @@
+.leftmenu {
+  height: 100vh;
+  background-color: #f0f0f0;
+  width: 15vw;
+  position: fixed;
+  top: 10;
+  left: 0;
+  right: 0;
+}
+.leftmenu > div {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 20px;
+}
+.leftmenu .div1 {
+  height: 80vh;
+}
+.leftmenu button {
+  margin: 10px;
+  padding: 10px;
+}
+.leftmenu .active {
+  background-color: black;
+  color: white;
+}

@@ -1,0 +1,41 @@
+.eachpayment {
+  display: flex;
+  overflow-y: hidden;
+  margin-left: 15vw;
+}
+
+.eachpaymentregion {
+  width: 100%;
+  height: 95vh;
+  overflow-y: hidden;
+  padding: 20px;
+}
+
+.eachpaymentregion input {
+  width: 300px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid black;
+  display: block;
+}
+
+.eachpaymentregion button {
+  background-color: black;
+  color: white;
+  margin-top: 30px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  width: 200px;
+}
+
+.eachpaymentregion .radios {
+  display: flex;
+  align-items: center;
+}
+
+.eachpaymentregion .radios > input {
+  width: 60px;
+  margin-left: 60px;
+}
