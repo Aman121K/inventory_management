@@ -12,6 +12,8 @@ function LeftMenu({ active }) {
     });
   };
 
+  console.log("activee>>",active)
+
   return (
     <div className="leftmenu">
       <div className="div1">
@@ -58,7 +60,7 @@ function LeftMenu({ active }) {
           Customers
         </button>
         <button
-          className={active === "vendord" ? "active" : ""}
+          className={active === "vendors" ? "active" : ""}
           onClick={() => navigate("/vendors")}
         >
           Vendors

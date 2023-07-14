@@ -3,6 +3,7 @@ import db, { auth } from "../../Firebase";
 import { useNavigate } from "react-router-dom";
 import LeftMenu from "../LeftMenu/LeftMenu";
 import "./Products.css";
+import { realDate } from "../../content/helper";
 
 function Products() {
   const [allProducts, setAllProducts] = useState([]);
@@ -67,13 +68,16 @@ function Products() {
                 <h4>Product Name</h4>
                 <h4>Stock</h4>
                 <h4>Avg Price</h4>
+                <h4>Date</h4>
               </div>
               {allFilteredProducts.map((prod) => {
+                console.log("prodcts dat>>",)
                 return (
                   <div className="eachproduct">
                     <h4>{prod.name}</h4>
                     <h4>{prod.stock}</h4>
                     <h4>Rs {prod.price || 0}</h4>
+                    <h4>{realDate(prod?.createdOn)}</h4>
                     <button
                       style={{ marginRight: 10 }}
                       onClick={() => navigate(`/product/${prod.id}`)}

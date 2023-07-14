@@ -3,6 +3,7 @@ import db, { auth } from "../../Firebase";
 import { useNavigate } from "react-router-dom";
 import LeftMenu from "../LeftMenu/LeftMenu";
 import "./Customers.css";
+import { realDate } from "../../content/helper";
 
 function Customers() {
   const [allProducts, setAllProducts] = useState([]);
@@ -71,6 +72,7 @@ function Customers() {
                   <div className="eachproduct">
                     <h4>{prod.name}</h4>
                     <h4>Amount {prod.amount}</h4>
+                    <h4>{realDate(prod?.createdOn)}</h4>
                     <button
                       style={{ marginRight: 10 }}
                       onClick={() => navigate(`/customer/${prod.id}`)}

@@ -31,12 +31,14 @@ function EachVendor() {
   }, []);
 
   const saveproduct = () => {
+
     const dateTime = Date.now();
     const timestamp = Math.floor(dateTime / 1000);
     if (productName == "") {
       alert("Please enter vendor name");
       return;
     }
+    console.log(productId,"prid")
     if (productId === "new") {
       const newProdId = db.collection("vendors").doc().id;
       db.collection("vendors")

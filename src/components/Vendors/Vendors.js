@@ -3,6 +3,7 @@ import db, { auth } from "../../Firebase";
 import { useNavigate } from "react-router-dom";
 import LeftMenu from "../LeftMenu/LeftMenu";
 import "./Vendors.css";
+import { realDate } from "../../content/helper";
 
 function Vendors() {
   const [allProducts, setAllProducts] = useState([]);
@@ -28,6 +29,7 @@ function Vendors() {
         allproducts.docs.map((product) => {
           tmp.push({ id: product.id, ...product.data() });
         });
+        console.log("vendor list>",tmp)
         setAllProducts(tmp);
         setAllFilteredProducts(tmp);
       });
@@ -47,7 +49,7 @@ function Vendors() {
 
   return (
     <div className="vendors">
-      <LeftMenu active="products" />
+      <LeftMenu active="vendors" />
       <div className="vendorsregion">
         <div className="addandfilter">
           <button onClick={() => navigate(`/vendor/new`)}>
@@ -71,6 +73,7 @@ function Vendors() {
                   <div className="eachproduct">
                     <h4>{prod.name}</h4>
                     <h4>Amount {prod.amount}</h4>
+                    <h4>{realDate(prod?.createdOn)}</h4>
                     <button
                       style={{ marginRight: 10 }}
                       onClick={() => navigate(`/vendor/${prod.id}`)}

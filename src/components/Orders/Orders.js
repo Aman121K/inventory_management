@@ -3,6 +3,7 @@ import LeftMenu from "../LeftMenu/LeftMenu";
 import { useNavigate } from "react-router-dom";
 import "./Orders.css";
 import db, { auth } from "../../Firebase";
+import { realDate } from "../../content/helper";
 
 function Orders({ type }) {
   const [allOrders, setAllOrders] = useState("");
@@ -66,9 +67,11 @@ function Orders({ type }) {
                 {type === "P" ? <h4>Vendor Name</h4> : <h4>Customer Name</h4>}
                 <h4>Status</h4>
                 <h4>No of products</h4>
+                <h4>Date</h4>
                 <h4 id="blankspace"></h4>
               </div>
               {allFilteredOrders.map((prod) => {
+                console.log(prod)
                 return (
                   <div className="eachorder">
                     {type === "P" ? (
@@ -78,6 +81,7 @@ function Orders({ type }) {
                     )}
                     <h4>{prod.status}</h4>
                     <h4>{prod.orderproducts.length}</h4>
+                    <h4>{realDate(prod?.createdOn)}</h4>
                     <button
                       onClick={() => navigate(`/order/${prod.id}/${type}`)}
                     >

@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import db, { auth } from "../../Firebase";
 import LeftMenu from "../LeftMenu/LeftMenu";
 import "./EachOrder.css";
+import VendorAddModal from "../../content/AddVendorpop";
+import AddCustomerModal from "../../content/AddCustomer";
 
 function EachOrder() {
   const { orderId, orderType } = useParams();
@@ -19,6 +21,9 @@ function EachOrder() {
   const [dropDownItems, setDropDownItems] = useState([]);
 
   const [currentnoofproducts, setcurrentnoofproducts] = useState(1);
+  const [openVendor, setopenVendor] = useState(false);
+
+  const [openCustomer, setOpenCustomer] = useState(false);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -51,7 +56,7 @@ function EachOrder() {
           setDropDownItems(tmp);
         });
     }
-  }, []);
+  }, [openVendor, openCustomer]);
 
   useEffect(() => {
     var tmp = [{ id: 0, name: "-" }];
@@ -375,6 +380,13 @@ function EachOrder() {
     }
     setOrderProducts(newArray);
   };
+  const handleClose = () => {
+    setopenVendor(!openVendor)
+  }
+
+  const handleClose1 = () => {
+    setOpenCustomer(!openCustomer)
+  }
 
   return (
     <div className="eachproducts">
@@ -415,7 +427,18 @@ function EachOrder() {
               </option>
             </select>
           </div>
+
+          <div>
+            <h5>Order Date</h5>
+            <input
+              type="date"
+              placeholder="Order Date"
+              value={orderDate}
+              onChange={(e) => setOrderDate(e.target.value)}
+            />
+          </div>
           {orderType === "S" && (
+            <>
             <div>
               <h5>Customer Name</h5>
               <select
@@ -440,44 +463,45 @@ function EachOrder() {
                 })}
               </select>
             </div>
+             <div onClick={() => setOpenCustomer(!openCustomer)}>Add Customer</div>
+             </>
           )}
-          <div>
-            <h5>Order Date</h5>
-            <input
-              type="date"
-              placeholder="Order Date"
-              value={orderDate}
-              onChange={(e) => setOrderDate(e.target.value)}
-            />
-          </div>
+
+         
+
+          <AddCustomerModal open={openCustomer} handleClose={handleClose1} />
+
           {/* </div>
 
         <div className="upperrow"> */}
           {orderType === "P" && (
-            <div>
-              <h5>Vendor Name</h5>
-              <select
-                onChange={(e) => {
-                  setVendorName(
-                    dropDownItems.filter(
-                      (item) => item.id === e.target.value
-                    )[0]?.name
-                  );
-                  setVendorId(e.target.value);
-                }}
-              >
-                {dropDownItems.map((eachitem) => {
-                  return (
-                    <option
-                      value={eachitem.id}
-                      selected={vendorName === eachitem.name}
-                    >
-                      {eachitem.name}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
+            <>
+              <div>
+                <h5>Vendor Name</h5>
+                <select
+                  onChange={(e) => {
+                    setVendorName(
+                      dropDownItems.filter(
+                        (item) => item.id === e.target.value
+                      )[0]?.name
+                    );
+                    setVendorId(e.target.value);
+                  }}
+                >
+                  {dropDownItems.map((eachitem) => {
+                    return (
+                      <option
+                        value={eachitem.id}
+                        selected={vendorName === eachitem.name}
+                      >
+                        {eachitem.name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div onClick={() => setopenVendor(!openVendor)}>Add Vendor</div>
+            </>
           )}
           {/* {orderType === "S" && (
             <div>
@@ -492,6 +516,9 @@ function EachOrder() {
           )} */}
           <div></div>
         </div>
+
+
+        <VendorAddModal open={openVendor} handleClose={handleClose} />
 
         <h5>Order Products</h5>
         <div>
@@ -555,7 +582,7 @@ function EachOrder() {
             </div>
             {orderType === "P" && (
               <div>
-                <h5>Total Cost</h5>
+                <h5>Per Unit Cost</h5>
                 <input
                   type="number"
                   placeholder="Cost Price per unit"
@@ -573,7 +600,7 @@ function EachOrder() {
             )}
             {orderType === "S" && (
               <div>
-                <h5>Total Cost</h5>
+                <h5>Per unit Cost</h5>
                 <input
                   type="number"
                   placeholder="Selling Price per unit"
@@ -589,6 +616,14 @@ function EachOrder() {
                 />
               </div>
             )}
+            <div>
+              <h5>Total Cost</h5>
+              <input
+                type="number"
+                placeholder="Total Price"
+                value={orderProducts?.[i]?.["spperunit"] || ""}
+              />
+            </div>
           </div>
         ))}
 
